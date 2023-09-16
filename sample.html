@@ -80,27 +80,29 @@
     // Get a reference to the database
     // Function to retrieve data when clicking the "Get" button
     function getDataOnce() {
-      const dataRef = ref(db, 'user');
-      get(dataRef)
+        const dataRef = ref(db, 'user');
+        get(dataRef)
         .then((snapshot) => {
-          const userData = snapshot.val();
-          console.log(userData);
-          // Update the displayed data
-          document.getElementById("usernameLine").innerHTML = "<strong>USERNAME:</strong> " + userData.username;
-          document.getElementById("emailLine").innerHTML = "<strong>EMAIL:</strong> " + userData.email;
-          document.getElementById("phoneLine").innerHTML = "<strong>PHONE:</strong> " + userData.PhoneNumber;
-        })
+        const userData = snapshot.val(); // Use .val() directly on the snapshot
+        console.log(userData);
+        // Update the displayed data
+        document.getElementById("usernameLine").innerHTML = "<strong>USERNAME:</strong> " + userData.username;
+        document.getElementById("emailLine").innerHTML = "<strong>EMAIL:</strong> " + userData.email;
+        document.getElementById("phoneLine").innerHTML = "<strong>PHONE:</strong> " + userData.PhoneNumber;
+    })
         .catch((error) => {
-          console.error('Error retrieving data:', error);
-        });
-    }
-        // Add a click event listener to the "Get" button
-        document.getElementById("getButton").addEventListener('click', getDataOnce);
+        console.error('Error retrieving data:', error);
+    });
+}
+
+// Add a click event listener to the "Get" button
+    document.getElementById("getButton").addEventListener('click', getDataOnce);
+
 
     </script>
 
     <!-- Button to trigger data retrieval -->
-    <button type="button" id="getButton">Get</button>
+    <button type="button" id="getButton" onclick="getDataOnce()">Get</button>
 
 </body>
 
