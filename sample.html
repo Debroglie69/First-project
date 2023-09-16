@@ -1,0 +1,107 @@
+<html>
+
+<head>
+    <title>Firebase_form</title>
+    <link rel="stylesheet" href="sample.css">
+</head>
+
+<body>
+    <div class="box">
+        <div class="form">
+            <h2>Login Form</h2>
+            <form>
+                <div class="inputbox">
+                    <input type="text" value="" id="username" required>
+                    <span>username</span>
+                </div>
+                <div class="inputbox">
+                    <input type="email" value="" id="email" required>
+                    <span>E-mail</span>
+                </div>
+                <div class="inputbox">
+                    <input type="text" value="" id="phone" required>
+                    <span>Phone Number</span>
+                </div>
+                <input type="submit" value="submit" class="sub" id="submit">
+            </form>
+        </div>
+    </div>
+
+
+    <div class="DISPLAY">
+        <p id="usernameLine"><strong>USERNAME:</strong></p>
+        <br>
+        <p id="emailLine"><strong>EMAIL:</strong> </p>
+        <br>
+        <p id="phoneLine"><strong>PHONE:</strong> </p>
+    </div>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCUEslaTplvgHMXsMPdxQ-_Hdm5XIa3OII",
+            authDomain: "sample2-8133c.firebaseapp.com",
+            projectId: "sample2-8133c",
+            storageBucket: "sample2-8133c.appspot.com",
+            messagingSenderId: "711159889794",
+            appId: "1:711159889794:web:36c3a4ecea95bbfef7599b",
+            measurementId: "G-07XPG5G25L"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        //get ref to database services
+        const db = getDatabase(app);
+
+        document.getElementById("submit").addEventListener('click', function (e) {
+            e.preventDefault();
+            set(ref(db, 'user/' + document.getElementById("username").value),
+                {
+
+                    username: document.getElementById("username").value,
+                    email: document.getElementById("email").value,
+                    PhoneNumber: document.getElementById("phone").value
+
+                })
+            alert("Login Sucessfull  !");
+        });
+
+        // Function to retrieve data when clicking the "Get" button
+        // Function to retrieve data when clicking the "Get" button
+        // Function to retrieve data when clicking the "Get" button
+    // Get a reference to the database
+    // Function to retrieve data when clicking the "Get" button
+    function getDataOnce() {
+      const dataRef = ref(db, 'user');
+      get(dataRef)
+        .then((snapshot) => {
+          const userData = snapshot.val();
+          console.log(userData);
+          // Update the displayed data
+          document.getElementById("usernameLine").innerHTML = "<strong>USERNAME:</strong> " + userData.username;
+          document.getElementById("emailLine").innerHTML = "<strong>EMAIL:</strong> " + userData.email;
+          document.getElementById("phoneLine").innerHTML = "<strong>PHONE:</strong> " + userData.PhoneNumber;
+        })
+        .catch((error) => {
+          console.error('Error retrieving data:', error);
+        });
+    }
+        // Add a click event listener to the "Get" button
+        document.getElementById("getButton").addEventListener('click', getDataOnce);
+
+    </script>
+
+    <!-- Button to trigger data retrieval -->
+    <button type="button" id="getButton">Get</button>
+
+</body>
+
+</html>
